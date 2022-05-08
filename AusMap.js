@@ -2,7 +2,7 @@ var w = 500;
 var h = 300;
 
 var projection = d3.geoMercator()
-                    .center([145, -36.5])
+                    .center([39.74739, -105])
                     .translate([w/2, h/2])
                     .scale(2500);
 
@@ -15,7 +15,7 @@ var svg = d3.select("#chart")
             .attr("height", h)
             .attr("fill", "grey");
 
-d3.json("LGA_VIC.json").then(function(json) {
+d3.json("australia.geo.json").then(function(json) {
   svg.selectAll("path")
       .data(json.features)
       .enter()
