@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+		<meta charset="utf-8">
+		<title>Australia map</title>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+		<style type="text/css">
+
+
+
+			body {
+				margin: 0;
+				background-color: lavender;
+				font-family: 'Roboto', sans-serif;
+				font-weight: 300;
+			}
+
+			#container {
+				width: 900px;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 50px;
+				padding: 5px 50px 10px 50px;
+				background-color: white;
+				box-shadow: 1px 1px 1px 1px #fff;
+			}
+
+			img.displayed {
+				    display: block;
+				    margin-left: auto;
+				    margin-right: auto;
+			}
+
+			h1 {
+				font-weight: 700;
+				color: #4e5a64;
+				font-size: 48px;
+				margin-bottom: 10px;
+			}
+
+			h2 {
+				font-weight: 700;
+				color: #4e5a64;
+				font-size: 26px;
+				margin-bottom: 0px;
+				padding-bottom: 0px;
+				}
+
+			p {
+				font-size: 16px;
+				margin: 15px 0 10px 0;
+			}
+
+			svg {
+				background-color: white;
+			}
+
+
+
+		</style>
+	</head>
+	<body>
+		<div id="container">
+		<h1>Australia map</h1>
+		<p>This is a map of Australia created with d3.js. I'm using a qualitative Brewer palette.</p>
+		<div id="svganchor"></div>
+		<br>
+		<p>Source of the shapefile: Australian Bureau of Statistics</p>
+		</div>
+		<script type="text/javascript">
+
+
+
+			//Width and height
+			var w = 850;
+			var h = 700;
+
+			//Define map projection
+			var projection = d3.geo.mercator()
+								   .center([ 132, -28 ])
+								   .translate([ w/2, h/2 ])
+								   .scale(1000);
+
+
+			//Define path generator
+			var path = d3.geo.path()
+							 .projection(projection);
+
+			var color = d3.scale.ordinal()
+							.range(['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462','#b3de69','#fccde5','#d9d9d9']);
+
+			//Create SVG
+			var svg = d3.select("#svganchor")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+			//Load in GeoJSON data
+			d3.json("aust.json", function(json) {
+
+				
+				//Bind data and create one path per GeoJSON feature
+				svg.selectAll("path")
+				   .data(json.features)
+				   .enter()
+				   .append("path")
+				   .attr("d", path)
+				   .attr("stroke", "dimgray")
+				   .attr("fill", function(d, i) {return color(i)});
+				  
+				 //States
+				svg.selectAll("text")
+					.data(json.features)
+					.enter()
+					.append("text")
+					.attr("fill", "darkslategray")
+					.attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+					.attr("text-anchor", "middle")
+    				.attr("dy", ".35em")
+					.text(function(d) {
+						return d.properties.STATE_NAME;
+					});
+
+				//Append the name
+				svg.append("text")
+					.attr("x", 446)
+					.attr("y", 340)
+					.attr("font-size", 90)
+					.attr("font-weight", "bold")
+					.attr("font-family", "Roboto")
+					.attr("text-anchor", "middle")
+					.attr("opacity", 0.10)
+					.text("AUSTRALIA");
+						
+			});
+
+
+
+		
+		</script>
+	</body>
+</html>
