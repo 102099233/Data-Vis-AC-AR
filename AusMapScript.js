@@ -15,17 +15,6 @@ var svg = d3.select("#chart")
             .attr("height", h)
             .attr("fill", "grey")
             .on("mouseover", function(event, d) {
-                var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.bandwidth() / 2;//creates a position with x, y coordinates to add text to
-                var yPosition = parseFloat(d3.select(this).attr("y")) + 14;//so on mouseover it creates the text based on the coordinates created.
-                svg.append("text")
-                  .attr("id", "tooltip")
-                  .attr("x", xPosition)
-                  .attr("y", yPosition)
-                  .attr("text-anchor", "middle")
-                  .attr("font-family", "sans-serif")
-                  .attr("font-weight", "bold")
-                  .attr("fill", "black")
-                  .text(d);
                 d3.select(this)
                   .attr("fill", "orange");})
             .on("mouseout", function() {
@@ -37,7 +26,8 @@ var xScale = d3.scaleBand()
               .domain([0,h])
               .rangeRound([0,w]);
 
-d3.json("aus_state.geojson").then(function(json) {
+//d3.csv("VIC_LGA_unemployment.csv").then( function(data) {
+d3.json("aust.json").then(function(json) {
   svg.selectAll("path")
       .data(json.features)
       .enter()
