@@ -17,7 +17,6 @@ var svg = d3.select("#chart")
             .attr("width", w)
             .attr("height", h);
 
-
 d3.csv("Question 1 Map.csv").then( function(data) {
 d3.json("aust.json").then(function(json) {
   var dataSTATE_NAME = new Array();
@@ -32,7 +31,7 @@ d3.json("aust.json").then(function(json) {
       jsonSTATE_NAME[j] = json.features[j].properties.STATE_NAME;
     }
   }
-console.table(dataSTATE_NAME);
+
   svg.selectAll("path")
       .data(json.features)
       .enter()
@@ -40,8 +39,19 @@ console.table(dataSTATE_NAME);
       .attr("d", path)
       .attr("stroke", "dimgray")
       .attr("fill", function(d, i) {return color(i)})
+      .on("mouseover", function () {
+        d3.select(this)
+          .transition()
+          .duration("50")
+          .attr("opacity", ".50");
+      })
+      .on("mouseout", function () {
+          d3.select(this)
+            .transition()
+            .duration("50")
+            .attr("opacity", "1");
+      })
       .append("title")
-      .attr("fill", "darkslategray")
       .text(function(d, i) {
           if(dataSTATE_NAME[i] == jsonSTATE_NAME[i])
           {
