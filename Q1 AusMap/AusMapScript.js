@@ -1,10 +1,10 @@
-var w = 850;
-var h = 700;
+var w = 700;
+var h = 450;
 
 var projection = d3.geoMercator()
-                    .center([135, -30])
+                    .center([135, -28])
                     .translate([w/2, h/2])
-                    .scale(1000);
+                    .scale(600);
 
 var path = d3.geoPath()
               .projection(projection);
@@ -34,16 +34,28 @@ d3.json("aust.json").then(function(json) {
         }
       }
     }
-    console.log(JSON.stringify(json.features[1].properties));
-    var Tooltip = d3.selectAll("#chart")
+    var Tooltip = d3.select("#chart")
                     .append("div")
                     .attr("class", "tooltip")
-                    .style("opacity", 1)
+                    .style("opacity", 0)
                     .style("background-color", "white")
                     .style("border", "solid")
                     .style("border-width", "2px")
                     .style("border-radius", "5px")
-                    .style("padding", "5px");
+                    .style("padding", "5px")
+                    .style("position", "absolute");
+
+  svg.selectAll("text")
+    .data(json.features)
+    .enter()
+  	.append("text")
+    .attr("fill", "darkslategray")
+  	.attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+  	.attr("text-anchor", "middle")
+  	.attr("dy", ".35em")
+    .text(function(d) {
+      	return d.properties.STATE_NAME;
+                    				});
 
   svg.selectAll("path")
       .data(json.features)
@@ -64,13 +76,13 @@ d3.json("aust.json").then(function(json) {
         if(d.properties.TRenew == 0 && d.properties.TNonRenew == 0)
         {
           Tooltip.html("State: " + d.properties.STATE_NAME + "<br>" + "Total Renewable Energy: Data Not Available" + "<br>" + "Total Non-Renewable Energy: Data Not Available")
-                 .style("left", (d3.pointer(event.x)) + "px")
-                 .style("top", (d3.pointer(event.y)) + "px");
+                 .style("left", (d3.pointer(event)[0]) + "px")
+                 .style("top", (d3.pointer(event)[1]) + "px");
         }
         else {
-          Tooltip.html("State: " + d.properties.STATE_NAME + "<br>" + "Total Renewable Energy: " + d.properties.TRenew + "<br>" + "Total Non-Renewable Energy: " + d.properties.TNonRenew)
-                 .style("left", (d3.pointer(event.x)) + "px")
-                 .style("top", (d3.pointer(event.y)) + "px");
+          Tooltip.html("State: " + d.properties.STATE_NAME + "<br>" + "Total Renewable Energy: " + d.properties.TRenew + " GWh" + "<br>" + "Total Non-Renewable Energy: " + d.properties.TNonRenew + " GWh")
+                 .style("left", `${d3.pointer(event)[0]}px`)
+                 .style("top", `${d3.pointer(event)[1]}px`);
         }
 
         })
