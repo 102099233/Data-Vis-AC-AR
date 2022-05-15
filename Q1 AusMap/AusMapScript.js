@@ -19,19 +19,6 @@ var svg = d3.select("#chart")
 
 d3.csv("Question 1 Map.csv").then( function(data) {
 d3.json("aust.json").then(function(json) {
-  var dataSTATE_NAME = new Array();
-  var dataTRenew = new Array();
-  var dataTNonRenew = new Array();
-  var jsonSTATE_NAME = new Array();
-  for (var i=0; i < data.length; i++) {
-    dataSTATE_NAME[i] = data[i].STATE_NAME;
-    dataTRenew[i] = parseFloat(data[i].TRenew);
-    dataTNonRenew[i] = parseFloat(data[i].TNonRenew);
-    for(var j = 0; j < json.features.length; j++) {
-      jsonSTATE_NAME[j] = json.features[j].properties.STATE_NAME;
-    }
-  }
-
   svg.selectAll("path")
       .data(json.features)
       .enter()
@@ -50,21 +37,54 @@ d3.json("aust.json").then(function(json) {
             .transition()
             .duration("50")
             .attr("opacity", "1");
-      })
-      .append("title")
-      .text(function(d, i) {
-          if(dataSTATE_NAME[i] == jsonSTATE_NAME[i])
-          {
-            if(dataTRenew[i] == 0 && dataTNonRenew[i] == 0)
-            {
-              return "Total Renewable: Data Not Available" + "\n" + "Total Non Renewable: Data Not Available";
-            }
-            else
-            {
-              return "Total Renewable: " + dataTRenew[i] + "\n" + "Total Non Renewable: " + dataTNonRenew[i];
-            }
-          }
       });
 
+
+  var Tooltip = d3.selectAll("#chart")
+                  .append("div")
+                  .attr("class", "tooltip")
+                  .style("opacity", 1)
+                  .style("background-color", "white")
+                  .style("border", "solid")
+                  .style("border-width", "2px")
+                  .style("border-radius", "5px")
+                  .style("padding", "5px");
+
+  var mouseover = function(event, d) {
+         Tooltip.style("opacity", 1);
+         }
+  var mousemove = function(event, d) {
+    if(d.TRenew == 0 && d.TNonRenew == 0)
+    {
+      Tooltip.html("State: " + d.STATE_NAME + "<br>" + "Total Renewable Energy: Data Not Available" + "<br>" + "Total Non-Renewable Energy: Data Not Available")
+             .style("left", (d3.pointer(event.x)) + "px")
+             .style("top", (d3.pointer(event.y)) + "px");
+    }
+    else {
+      Tooltip.html("State: " + d.STATE_NAME + "<br>" + "Total Renewable Energy: " + d.TRenew + "<br>" + "Total Non-Renewable Energy: " + d.TNonRenew)
+             .style("left", (d3.pointer(event.x)) + "px")
+             .style("top", (d3.pointer(event.y)) + "px");
+    }
+
+    }
+  var mouseout = function(event, d) {
+         Tooltip.style("opacity", 0);
+        }
+
+  svg.selectAll("myCircles")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("cx", function(d){ return projection([d.Long, d.Lat])[0] })
+      .attr("cy", function(d){ return projection([d.Long, d.Lat])[1] })
+      .attr("r", 14)
+      .attr("class", "circle")
+      .style("fill", "69b3a2")
+      .attr("stroke", function(d, i) {return color(i)})
+      .attr("stroke-width", 3)
+      .attr("fill-opacity", .4)
+      .on("mouseover", mouseover)
+      .on("mousemove", mousemove)
+      .on("mouseout", mouseout);
     })
 })
