@@ -4,15 +4,10 @@ function init() {
 
 	var dataset;
 //download from the csv file
-	d3.csv("Unemployment_78-95.csv", function(d) {
-		return {
-			date: new Date(+d.year, +d.month-1), //stores the date in the given format
-			number: +d.number//stores number in number
-		};
-		  }).then(function(data) {
+	d3.csv("Question 3 Line Chart CSV.csv").then(function(data) {
 						dataset = data;
 						lineChart(dataset);
-						console.table(dataset, ["date", "number"]);//creates a table in the console so can see the data stored
+						console.table(dataset);//creates a table in the console so can see the data stored
 					});
 }
 
@@ -21,8 +16,8 @@ function lineChart(dataset) {
 		var h = 300;
 		var padding = 20;
  xScale = d3.scaleTime()
-									.domain([d3.min(dataset, function(d) {return d.date;}),//scaling in the x axis with domain being min date and max date
-														d3.max(dataset, function(d) {return d.date;})
+									.domain([d3.min(dataset, function(d) {return d.Years;}),//scaling in the x axis with domain being min date and max date
+														d3.max(dataset, function(d) {return d.Years;})
 													])
 									.range([padding + 60, w-padding]);
 
