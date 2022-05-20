@@ -159,7 +159,7 @@ d3.csv("Question 3 Line Chart CSV.csv").then(function(data) {
 							.call(d3.axisLeft(y).tickSize(-width).tickFormat(''));
 
 
-							var keys = ["Agriculture", "Mining", "Manufacturing", "Electricity Generation", "Construction", "Transport", "WaterWaste", "Commercial Services", "Residential"];
+							var keys = ["Agriculture", "Mining", "Manufacturing", "Electricity Generation", "Construction", "Transport", "Water Waste", "Commercial Services", "Residential"];
 
 							var color = d3.scaleOrdinal()
 								.domain(keys)
