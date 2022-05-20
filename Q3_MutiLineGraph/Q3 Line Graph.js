@@ -46,7 +46,7 @@ var svg = d3.select("#chart")
 var svg2 = d3.select("#chart")
 						.append("svg")
 						.attr("width", 200)
-						.attr("height", 400)
+						.attr("height", 270)
 						.append("g");
 
 
@@ -73,7 +73,7 @@ d3.csv("Question 3 Line Chart CSV.csv").then(function(data) {
 					svg.append("path")
 	       			.data([data])
 	       			.attr("class", "line")
-							.style("stroke", d3.schemeSet3[0])
+							.style("stroke", d3.schemeCategory10[0])
 							.attr("stroke-width", 2)
 							.style("fill","none")
 	       			.attr("d", valueline1);
@@ -81,7 +81,7 @@ d3.csv("Question 3 Line Chart CSV.csv").then(function(data) {
 							svg.append("path")
 							.data([data])
 							.attr("class", "line")
-							.style("stroke", d3.schemeSet3[1])
+							.style("stroke", d3.schemeCategory10[1])
 							.attr("stroke-width", 2)
 							.style("fill","none")
 							.attr("d", valueline2);
@@ -89,7 +89,7 @@ d3.csv("Question 3 Line Chart CSV.csv").then(function(data) {
 							svg.append("path")
 							.data([data])
 							.attr("class", "line")
-							.style("stroke", d3.schemeSet3[2])
+							.style("stroke", d3.schemeCategory10[2])
 							.attr("stroke-width", 2)
 							.style("fill","none")
 							.attr("d", valueline3);
@@ -97,7 +97,7 @@ d3.csv("Question 3 Line Chart CSV.csv").then(function(data) {
 							svg.append("path")
 							.data([data])
 							.attr("class", "line")
-							.style("stroke", d3.schemeSet3[3])
+							.style("stroke", d3.schemeCategory10[3])
 							.attr("stroke-width", 2)
 							.style("fill","none")
 							.attr("d", valueline4);
@@ -105,7 +105,7 @@ d3.csv("Question 3 Line Chart CSV.csv").then(function(data) {
 							svg.append("path")
 							.data([data])
 							.attr("class", "line")
-							.style("stroke", d3.schemeSet3[4])
+							.style("stroke", d3.schemeCategory10[4])
 							.attr("stroke-width", 2)
 							.style("fill","none")
 							.attr("d", valueline5);
@@ -113,7 +113,7 @@ d3.csv("Question 3 Line Chart CSV.csv").then(function(data) {
 							svg.append("path")
 							.data([data])
 							.attr("class", "line")
-							.style("stroke", d3.schemeSet3[5])
+							.style("stroke", d3.schemeCategory10[5])
 							.attr("stroke-width", 2)
 							.style("fill","none")
 							.attr("d", valueline6);
@@ -121,7 +121,7 @@ d3.csv("Question 3 Line Chart CSV.csv").then(function(data) {
 							svg.append("path")
 							.data([data])
 							.attr("class", "line")
-							.style("stroke", d3.schemeSet3[6])
+							.style("stroke", d3.schemeCategory10[6])
 							.attr("stroke-width", 2)
 							.style("fill","none")
 							.attr("d", valueline7);
@@ -129,7 +129,7 @@ d3.csv("Question 3 Line Chart CSV.csv").then(function(data) {
 							svg.append("path")
 							.data([data])
 							.attr("class", "line")
-							.style("stroke", d3.schemeSet3[7])
+							.style("stroke", d3.schemeCategory10[7])
 							.attr("stroke-width", 2)
 							.style("fill","none")
 							.attr("d", valueline8);
@@ -137,7 +137,7 @@ d3.csv("Question 3 Line Chart CSV.csv").then(function(data) {
 							svg.append("path")
 							.data([data])
 							.attr("class", "line")
-							.style("stroke", d3.schemeSet3[8])
+							.style("stroke", d3.schemeCategory10[8])
 							.attr("stroke-width", 2)
 							.style("fill","none")
 							.attr("d", valueline9);
@@ -163,7 +163,7 @@ d3.csv("Question 3 Line Chart CSV.csv").then(function(data) {
 
 							var color = d3.scaleOrdinal()
 								.domain(keys)
-								.range(d3.schemeSet3);
+								.range(d3.schemeCategory10);
 
 							svg2.selectAll("mydots")
 								.data(keys)
