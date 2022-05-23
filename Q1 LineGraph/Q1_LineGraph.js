@@ -1,44 +1,127 @@
 function nonRenew() {
-	var w = 600;
-	var h = 300;
+	var margin = {top: 20, right: 20, bottom: 30, left: 50},
+	    width = 960 - margin.left - margin.right,
+	    height = 500 - margin.top - margin.bottom;
 
-	var dataset;
+	var x = d3.scalePoint().range([0, width]);
+	var y = d3.scaleLinear().range([height, 0]);
 
-	d3.csv("Q1 Line Non Renew CSV.csv", function(d) {
-		return {
-			date: new Date(+d.year, +d.month-1),
-			number: +d.number};}
-		, function(data) {
-						dataset = data;
-						//lineChart(dataset);
-						console.table(dataset, ["date", "number"]);
-					});
-
- xScale = d3.scaleTime()
-									.domain([d3.min(dataset, function(d) {return d.date;}), d3.max(dataset, function(d) {return d.date;})])
-									.range([0, w]);
-
-
-
-yScale = d3.scaleLinear()
-									.domain([0, d3.max(dataset, function(d) { return d.number; })])
-									.range ([h, 0]);
-
- var line = d3.line()
- 							.x(function(d) { return xScale(d.date); })
-							.y(function(d) { return yScale(d.average); });
-
-
+	var valueline1 = d3.line()
+			    					.x(function(d) { return x(d.Years); })
+			    					.y(function(d) { return y(d.BrownCoal); });
+	var valueline2 = d3.line()
+										.x(function(d) { return x(d.Years); })
+										.y(function(d) { return y(d.BlackCoal); });
+	var valueline3 = d3.line()
+										.x(function(d) { return x(d.Years); })
+										.y(function(d) { return y(d.NaturalGas); });
+	var valueline4 = d3.line()
+										.x(function(d) { return x(d.Years); })
+										.y(function(d) { return y(d.OilProducts); });
 
 	var svg = d3.select("#chart")
-				.append("svg")
-				.attr("width", w)
-				.attr("height", h);
+							.append("svg")
+							.attr("width", width + margin.left + margin.right)
+							.attr("height", height + margin.top + margin.bottom)
+							.append("g")
+							.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-			svg.append("path")
-			.datum(dataset)
-			.attr("class", "line")
-			.attr("d", line);
+	var svg2 = d3.select("#chart")
+							 .append("svg")
+						 	 .attr("width", 200)
+							 .attr("height", 270)
+							 .append("g");
+
+	d3.csv("Question 1 Line Non Renew CSV.csv").then(function(data) {
+		data.forEach(function(d) {
+					d.Years = d.Years;
+					d.BrownCoal = +d.BrownCoal;
+					d.BlackCoal = +d.BlackCoal;
+					d.NaturalGas = d.NaturalGas;
+					d.OilProducts = +d.OilProducts;
+					});
+
+			x.domain(d3.map(data, function(d) { return d.Years; }));
+			y.domain([0, d3.max(data, function(d) {
+						return Math.max(d.BrownCoal, d.BlackCoal, d.NaturalGas, d.OilProducts); })]);
+
+
+						svg.append("path")
+								.data([data])
+								.attr("class", "line")
+								.style("stroke", d3.schemeCategory10[0])
+								.attr("stroke-width", 2)
+								.style("fill","none")
+								.attr("d", valueline1);
+
+								svg.append("path")
+								.data([data])
+								.attr("class", "line")
+								.style("stroke", d3.schemeCategory10[1])
+								.attr("stroke-width", 2)
+								.style("fill","none")
+								.attr("d", valueline2);
+
+								svg.append("path")
+								.data([data])
+								.attr("class", "line")
+								.style("stroke", d3.schemeCategory10[2])
+								.attr("stroke-width", 2)
+								.style("fill","none")
+								.attr("d", valueline3);
+
+								svg.append("path")
+								.data([data])
+								.attr("class", "line")
+								.style("stroke", d3.schemeCategory10[3])
+								.attr("stroke-width", 2)
+								.style("fill","none")
+								.attr("d", valueline4);
+
+
+								svg.append("g")
+										.attr("transform", "translate(0," + height + ")")
+										.call(d3.axisBottom(x));
+
+								svg.append("g")
+										.call(d3.axisLeft(y));
+
+								svg.append('g')
+										.attr('class', 'grid')
+										.attr('transform', 'translate(0,' + height + ')')
+										.call(d3.axisBottom(x).tickSize(-height).tickFormat(''));
+
+								svg.append('g')
+										.attr('class', 'grid')
+										.call(d3.axisLeft(y).tickSize(-width).tickFormat(''));
+
+
+										var keys = ["Black Coal", "Brown Coal", "Natural Gas", "Oil Products"];
+
+										var color = d3.scaleOrdinal()
+											.domain(keys)
+											.range(d3.schemeCategory10);
+
+										svg2.selectAll("mydots")
+											.data(keys)
+											.enter()
+											.append("circle")
+											.attr("cx", 10)
+											.attr("cy", function(d,i){ return 25 + i*25})
+											.attr("r", 7)
+											.style("fill", function(d){ return color(d)});
+
+										svg2.selectAll("mylabels")
+											.data(keys)
+											.enter()
+											.append("text")
+											.attr("x", 30)
+											.attr("y", function(d,i){ return 25 + i*25})
+											.style("fill", function(d){ return color(d)})
+											.text(function(d){ return d})
+											.attr("text-anchor", "left")
+											.style("alignment-baseline", "middle");
+		});
 }
 
 function renew() {
