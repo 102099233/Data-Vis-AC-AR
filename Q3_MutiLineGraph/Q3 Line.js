@@ -38,10 +38,10 @@ var valueline9 = d3.line()
 
 var svg = d3.select("#chart")
 						.append("svg")
-						.attr("width", width + margin.left + margin.right)
-						.attr("height", height + margin.top + margin.bottom)
+						.attr("width", width + margin.left + margin.right + 20)
+						.attr("height", height + margin.top + margin.bottom + 20)
 						.append("g")
-						.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+						.attr("transform", "translate(" + (margin.left + 20) + "," + margin.top + ")");
 
 var svg2 = d3.select("#chart")
 						.append("svg")
@@ -148,6 +148,19 @@ d3.csv("Question 3 Line Chart CSV.csv").then(function(data) {
 
 	   			svg.append("g")
 	       			.call(d3.axisLeft(y));
+
+              svg.append("text")
+                  .attr("text-anchor", "end")
+                  .attr("x", width/2)
+                  .attr("y", height + margin.top + 20)
+                  .text("Years");
+
+              svg.append("text")
+                  .attr("text-anchor", "middle")
+                  .attr("transform", "rotate(-90)")
+                  .attr("y", -margin.left)
+                  .attr("x", -(height/2))
+                  .text("Net Energy Consumption (PJ)");
 
 					svg.append('g')
 							.attr('class', 'grid')
