@@ -1,13 +1,13 @@
-function nonRenew() {
+function nonRenew() {//creates a function to call during button press on the html page
 
-  d3.selectAll("svg").remove();
+  d3.selectAll("svg").remove(); //removes the existing svg
 	var margin = {top: 20, right: 20, bottom: 30, left: 50},
 	    width = 960 - margin.left - margin.right,
 	    height = 500 - margin.top - margin.bottom;
 
 	var x = d3.scalePoint().range([0, width]);
 	var y = d3.scaleLinear().range([height, 0]);
-
+//creates valuelines that have x and y values based on coloumns from the csv file
 	var valueline1 = d3.line()
 			    					.x(function(d) { return x(d.Years); })
 			    					.y(function(d) { return y(d.BlackCoal); });
@@ -20,7 +20,7 @@ function nonRenew() {
 	var valueline4 = d3.line()
 										.x(function(d) { return x(d.Years); })
 										.y(function(d) { return y(d.OilProducts); });
-
+//append svg to chart id in html page
 	var svg = d3.select("#chart")
 							.append("svg")
 							.attr("width", width + margin.left + margin.right + 20)
@@ -33,7 +33,7 @@ function nonRenew() {
 						 	 .attr("width", 200)
 							 .attr("height", 270)
 							 .append("g");
-
+//parse csv file
 	d3.csv("Question 1 Line Non Renew.csv").then(function(data) {
 		data.forEach(function(d) {
 					d.Years = d.Years;
@@ -42,12 +42,12 @@ function nonRenew() {
 					d.NaturalGas = +d.NaturalGas;
 					d.OilProducts = +d.OilProducts;
         });
-
+//domain of the x and y axis based on years or max value from the numerical values
 			x.domain(d3.map(data, function(d) { return d.Years; }));
 			y.domain([0, d3.max(data, function(d) {
 						return Math.max(d.BlackCoal, d.BrownCoal, d.NaturalGas, d.OilProducts); })]);
 
-
+//appends path for each line
 						svg.append("path")
 								.data([data])
 								.attr("class", "line")
@@ -80,14 +80,14 @@ function nonRenew() {
 								.style("fill","none")
 								.attr("d", valueline4);
 
-
+//apends x and y axis to chart
 								svg.append("g")
 										.attr("transform", "translate(0," + height + ")")
 										.call(d3.axisBottom(x));
 
 								svg.append("g")
 										.call(d3.axisLeft(y));
-
+//appends axis labels
                 svg.append("text")
                     .attr("text-anchor", "end")
                     .attr("x", width/2)
@@ -100,7 +100,7 @@ function nonRenew() {
                     .attr("y", -margin.left)
                     .attr("x", -(height/2))
                     .text("Electricity Generation (GWh)");
-
+//creates grids on the chart
 								svg.append('g')
 										.attr('class', 'grid')
 										.attr('transform', 'translate(0,' + height + ')')
@@ -110,13 +110,13 @@ function nonRenew() {
 										.attr('class', 'grid')
 										.call(d3.axisLeft(y).tickSize(-width).tickFormat(''));
 
-
+//key variable for legend
 										var keys = ["Black Coal", "Brown Coal", "Natural Gas", "Oil Products"];
-
+//sets colour for each value in the key array
 										var color = d3.scaleOrdinal()
 											.domain(keys)
 											.range(d3.schemeCategory10);
-
+//creates dots made of circles on the legend
 										svg2.selectAll("mydots")
 											.data(keys)
 											.enter()
@@ -125,7 +125,7 @@ function nonRenew() {
 											.attr("cy", function(d,i){ return 25 + i*25})
 											.attr("r", 7)
 											.style("fill", function(d){ return color(d)});
-
+//creates text on the legend
 										svg2.selectAll("mylabels")
 											.data(keys)
 											.enter()
@@ -139,7 +139,7 @@ function nonRenew() {
 		});
 }
 
-function Renew() {
+function Renew() {//function for the renewable graph. Same code except fr the column names and how many lines are created
 
   d3.selectAll("svg").remove();
 	var margin = {top: 20, right: 20, bottom: 30, left: 50},
@@ -304,4 +304,4 @@ function Renew() {
 		});
 }
 
-window.onload = nonRenew()
+window.onload = nonRenew() //when the window is loaded the non renewablegraph is immediately shown
