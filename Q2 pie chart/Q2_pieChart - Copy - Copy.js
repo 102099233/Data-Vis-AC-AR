@@ -36,6 +36,18 @@ function base(){
             dataInt[i] = data[i].Total_Emission;
         }
 
+        //creating tooltip variable
+        var Tooltip = d3.select("#chart")
+                .append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0)
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "2px")
+                .style("border-radius", "5px")
+                .style("padding", "5px")
+                .style("position", "absolute");
+
         //Set up groups
         var arcs = svg.selectAll("g.arc")
                     .data(pie(dataInt))
@@ -46,22 +58,32 @@ function base(){
                     .on('mouseover', function (d, i) {
                         d3.select(this).transition()
                             .duration('50')
-                            .attr('opacity', '.85');
-                        div.transition()
-                            .duration(50)
-                            .style("opacity", 1);
-                        let num = (Math.round((d.value / d.data.all) * 100)).toString() + '%';
-                        div.html(num)
-                            .style("left", (d3.event.pageX + 10) + "px")
-                            .style("top", (d3.event.pageY - 15) + "px");
+                            .attr('opacity', '.85')
+                            .style("cursor", "pointer")
+                            // path.append("svg:title")
+                            // .text( function (d) { 
+                            //     return "This value is ";
+                            // });
+                        // div.transition()
+                        //     .duration(50)
+                        //     .style("opacity", 1);
+                        // let num = 'Total emissions: ' + i;
+                        // div.html(num)
+                        //     .style("left", (d3.event.pageX + 10) + "px")
+                        //     .style("top", (d3.event.pageY - 15) + "px");
+                    })
+                    .on("mousemove", function(event, d) {
+                        Tooltip.html("Total emissions: " + d.value)
+                               .style("left", (d3.pointer(event)[0]) + "px")
+                               .style("top", (d3.pointer(event)[1]) + "px");
                     })
                     .on('mouseout', function (d, i) {
                         d3.select(this).transition()
                             .duration('50')
                             .attr('opacity', '1');
-                        div.transition()
-                            .duration('50')
-                            .style("opacity", 0);
+                        // div.transition()
+                        //     .duration('50')
+                        //     .style("opacity", 0);
                     });
 
         //Draw arc paths
