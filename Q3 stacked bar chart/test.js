@@ -16,10 +16,10 @@ function base(){
     d3.csv("Question 3 Segmented Bar CSV.csv").then( function(data) {
 
     // List of subgroups = header of the csv files = soil condition here
-    const subgroups = data.columns.slice(1);
+  const subgroups = data.columns
 
-    // List of groups = species here = value of the first column called States -> I show them on the X axis
-    const groups = data.map(d => (d.States));
+  // List of groups = species here = value of the first column called States
+  const groups = data.map(d => (d.group))
 
     // Add X axis
     const x = d3.scaleBand()
@@ -32,7 +32,7 @@ function base(){
 
     // Add Y axis
     const y = d3.scaleLinear()
-    .domain([0, 1000])
+    .domain([0, 1500])
     .range([ height, 0 ]);
     svg.append("g")
     .call(d3.axisLeft(y));
@@ -40,25 +40,26 @@ function base(){
     // color palette = one color per subgroup
     const color = d3.scaleOrdinal()
     .domain(subgroups)
-    .range(['#ffffd9','#edf8b1','#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#253494','#081d58']);
+    .range(['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6']);
 
-    //stack the data? --> stack per subgroup
-    const stackedData = d3.stack()
-    .keys(subgroups)
-    (data);
+    //stack data
+    var stack = d3.stack()
+                    .keys(subgroups)
+
+    var series = stack(data);
 
     // Show the bars
     svg.append("g")
     .selectAll("g")
     // Enter in the stack data = loop key per key = group per group
-    .data(stackedData)
+    .data(series)
     .join("g")
-    .attr("fill", d => color(d.subgroups)) //color(d.key))
+    .attr("fill", d => color(d.key))
     .selectAll("rect")
     // enter a second time = loop subgroup per subgroup to add all rectangles
     .data(d => d)
     .join("rect")
-        .attr("x", d => x(d.data.States))
+        .attr("x", d => x(d.data.group))
         .attr("y", d => y(d[1]))
         .attr("height", d => y(d[0]) - y(d[1]))
         .attr("width",x.bandwidth());

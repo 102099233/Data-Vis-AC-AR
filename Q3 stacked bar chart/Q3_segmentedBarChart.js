@@ -40,51 +40,13 @@ function base(){
     // color palette = one color per subgroup
     const color = d3.scaleOrdinal()
     .domain(subgroups)
-    .range(['#ffffd9','#edf8b1','#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#253494','#081d58']);
-
-    // //Set up scales
-    // var xScale = d3.scaleBand()
-    //     .domain(d3.range(data.length))
-    //     .range([0, width])
-    //     .paddingInner(0.05);
-
-    // var yScale = d3.scaleLinear()
-    //     .domain([0,				
-    //         d3.max(data, function(d) {
-    //             return d.Agriculture + d.Mining + d.Manufacturing + d.ElectricityGeneration + d.Construction + 
-    //             d.Transport + d.WaterWaste + d.CommercialServices + d.Residential;
-    //         })
-    //     ])
-    //     .range([height, 0]);
+    .range(['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6']);
 
     //stack data
     var stack = d3.stack()
                     .keys(subgroups)
 
     var series = stack(data);
-
-    // var group = svg.selectAll("g")
-    //     .data(series)
-    //     .enter()
-    //     .append("g")
-    //     .style("fill", function(d, i) {
-    //         return colors(i);
-    //     });
-
-    // var rects = group.selectAll("rect")
-    //     .data(function(d) { return d; })
-    //     .enter()
-    //     .append("rect")
-    //     .attr("x", function(d, i) {
-    //         return xScale(i);
-    //     })
-    //     .attr("y", function(d) {
-    //         return yScale(d[1]);
-    //     })
-    //     .attr("height", function(d) {
-    //         return yScale(d[0]) - yScale(d[1]);
-    //     })
-    //     .attr("width", xScale.bandwidth());
 
     // Show the bars
     svg.append("g")
