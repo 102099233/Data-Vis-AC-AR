@@ -1,79 +1,107 @@
 function base(){
-    var w = 300;
-    var h = 300;
+    // set the dimensions and margins of the graph
+    const margin = {top: 10, right: 30, bottom: 20, left: 50},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 
-    d3.csv("Question 3 Segmented Bar CSV.csv").then(function(data) {
-        data.forEach(function(d) {
-            //d.States = d.States
-            d.Agriculture = d.Agriculture;
-		    d.Mining = d.Mining;
-		    d.Manufacturing = d.Manufacturing;
-			d.ElectricityGeneration = d.ElectricityGeneration;
-			d.Construction = d.Construction;
-			d.Transport = d.Transport;
-			d.WaterWaste = d.WaterWaste;
-			d.CommercialServices = d.CommercialServices;
-			d.Residential = d.Residential;
-        });
-        console.log(data);
+    // append the svg object to the body of the page
+    const svg = d3.select("#chart")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        //Set up stack method
-        var stack = d3.stack()
-        .keys([ /*"States",*/ "Agriculture", "Mining", "Manufacturing", "ElectricityGeneration", 
-        "Construction", "Transport", "WaterWaste", "CommercialServices", "Residential" ])
-        .order(d3.stackOrderDescending); 
+    // Parse the Data
+    d3.csv("Question 3 Segmented Bar CSV.csv").then( function(data) {
 
-        var series = stack(data);
+    // List of subgroups = header of the csv files = soil condition here
+  const subgroups = data.columns
 
-        //Set up scales
-        var xScale = d3.scaleBand()
-        .domain(d3.range(data.length))
-        .range([0, w])
-        .paddingInner(0.05);
+  // List of groups = species here = value of the first column called States
+  const groups = data.map(d => (d.group))
 
-        var yScale = d3.scaleLinear()
-        .domain([0,				
-        d3.max(data, function(d) {
-        return d.Agriculture + d.Mining + d.Manufacturing + d.ElectricityGeneration + d.Construction + d.Transport + 
-        d.WaterWaste + d.CommercialServices + d.Residential;
-        })
-        ])
-        .range([h, 0]);
+    // Add X axis
+    const x = d3.scaleBand()
+    .domain(groups)
+    .range([0, width])
+    .padding([0.2]);
+    svg.append("g")
+    .attr("transform", `translate(0, ${height})`)
+    .call(d3.axisBottom(x).tickSizeOuter(0));
 
-        var colors = d3.scaleOrdinal(d3.schemeCategory10);
+    // Add Y axis
+    const y = d3.scaleLinear()
+    .domain([0, 1500])
+    .range([ height, 0 ]);
+    svg.append("g")
+    .call(d3.axisLeft(y));
 
-        //Create SVG element
-        var svg = d3.select("#chart")
-        .append("svg")
-        .attr("width", w)
-        .attr("height", h);
+    // color palette = one color per subgroup
+    const color = d3.scaleOrdinal()
+    .domain(subgroups)
+    .range(['#ffffd9','#edf8b1','#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#253494','#081d58']);
 
-        var groups = svg.selectAll("g")
-        .data(series)
-        .enter()
-        .append("g")
-        .style("fill", function(d, i) {
-        return colors(i);
-        });
+    // //Set up scales
+    // var xScale = d3.scaleBand()
+    //     .domain(d3.range(data.length))
+    //     .range([0, width])
+    //     .paddingInner(0.05);
 
-        //create bars
-        var rects = groups.selectAll("rect")
-        .data(series)
-        .enter()
-        .append("rect")
-        .attr("x", function(d, i) {
-        return xScale(i);
-        })
-        .attr("y", function(d) {
-        return yScale(d[1]);
-        })
-        .attr("height", function(d) {
-        return console.log(d[0]) - yScale(d[1]);//yScale(d[0]) - yScale(d[1]);
-        })
-        .attr("width", xScale.bandwidth());
-    });
+    // var yScale = d3.scaleLinear()
+    //     .domain([0,				
+    //         d3.max(data, function(d) {
+    //             return d.Agriculture + d.Mining + d.Manufacturing + d.ElectricityGeneration + d.Construction + 
+    //             d.Transport + d.WaterWaste + d.CommercialServices + d.Residential;
+    //         })
+    //     ])
+    //     .range([height, 0]);
 
-    
+    //stack data
+    var stack = d3.stack()
+                    .keys(subgroups)
+
+    var series = stack(data);
+
+    // var group = svg.selectAll("g")
+    //     .data(series)
+    //     .enter()
+    //     .append("g")
+    //     .style("fill", function(d, i) {
+    //         return colors(i);
+    //     });
+
+    // var rects = group.selectAll("rect")
+    //     .data(function(d) { return d; })
+    //     .enter()
+    //     .append("rect")
+    //     .attr("x", function(d, i) {
+    //         return xScale(i);
+    //     })
+    //     .attr("y", function(d) {
+    //         return yScale(d[1]);
+    //     })
+    //     .attr("height", function(d) {
+    //         return yScale(d[0]) - yScale(d[1]);
+    //     })
+    //     .attr("width", xScale.bandwidth());
+
+    // Show the bars
+    svg.append("g")
+    .selectAll("g")
+    // Enter in the stack data = loop key per key = group per group
+    .data(series)
+    .join("g")
+    .attr("fill", d => color(d.key))
+    .selectAll("rect")
+    // enter a second time = loop subgroup per subgroup to add all rectangles
+    .data(d => d)
+    .join("rect")
+        .attr("x", d => x(d.data.group))
+        .attr("y", d => y(d[1]))
+        .attr("height", d => y(d[0]) - y(d[1]))
+        .attr("width",x.bandwidth());
+    })
 }
 
 window.onload = base;

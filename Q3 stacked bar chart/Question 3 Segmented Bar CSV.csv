@@ -1,4 +1,4 @@
-States,Agriculture,Mining,Manufacturing,ElectricityGeneration,Construction,Transport,WaterWaste,CommercialServices,Residential
+group,Agriculture,Mining,Manufacturing,ElectricityGeneration,Construction,Transport,WaterWaste,CommercialServices,Residential
 NSW,22.3,71.5,243,392.1,14.6,484.4,4.5,94.1,127.8
 VIC,9.9,21.7,166.4,365.9,13.4,355.9,4.8,97.5,183.1
 QLD,24.6,264,270,409.1,7,364.3,3.7,62.5,57.5

@@ -53,7 +53,7 @@ function base(){
     // Enter in the stack data = loop key per key = group per group
     .data(stackedData)
     .join("g")
-    .attr("fill", d => color(d.key))
+    .attr("fill", d => color(d.subgroups)) //color(d.key))
     .selectAll("rect")
     // enter a second time = loop subgroup per subgroup to add all rectangles
     .data(d => d)
