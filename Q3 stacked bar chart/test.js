@@ -4,13 +4,19 @@ function base(){
     width = 460 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
-    // append the svg object to the body of the page
-    const svg = d3.select("#chart")
+    //create svg for chart and legend
+    var svg = d3.select("#chart")
     .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", width + margin.left + margin.right + 20)
+    .attr("height", height + margin.top + margin.bottom + 20)
     .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
+    .attr("transform", "translate(" + (margin.left + 20) + "," + margin.top + ")");
+
+    var svg2 = d3.select("#chart")
+						.append("svg")
+						.attr("width", 200)
+						.attr("height", 270)
+						.append("g");
 
     // Parse the Data
     d3.csv("Question 3 Segmented Bar CSV.csv").then( function(data) {
@@ -63,6 +69,35 @@ function base(){
         .attr("y", d => y(d[1]))
         .attr("height", d => y(d[0]) - y(d[1]))
         .attr("width",x.bandwidth());
+    
+    //creating keys for the legend and settign colour to each one
+    var keys = ["Residential", "Agriculture", "Mining", "Manufacturing", "Electricity Generation", "Construction", "Transport", "Water Waste", "Commercial Services"];
+    
+    var colors = d3.scaleOrdinal()
+								.domain(keys)
+								.range(['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6']);
+
+    //Placing dots on the legend
+    svg2.selectAll("mydots")
+        .data(keys)
+        .enter()
+        .append("circle")
+        .attr("cx", 10)
+        .attr("cy", function(d,i){ return 25 + i*25})
+        .attr("r", 7)
+        .style("fill", function(d){ return colors(d)});
+
+    //Placing key values on the legend
+    svg2.selectAll("mylabels")
+        .data(keys)
+        .enter()
+        .append("text")
+        .attr("x", 30)
+        .attr("y", function(d,i){ return 25 + i*25})
+        .style("fill", function(d){ return colors(d)})
+        .text(function(d){ return d})
+        .attr("text-anchor", "left")
+        .style("alignment-baseline", "middle");
     })
 }
 
