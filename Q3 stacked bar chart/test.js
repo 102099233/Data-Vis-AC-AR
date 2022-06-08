@@ -43,6 +43,20 @@ function base(){
     svg.append("g")
     .call(d3.axisLeft(y));
 
+    //Axis labels
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height + margin.top + 20)
+        .text("States");
+
+    svg.append("text")
+        .attr("text-anchor", "middle")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -margin.left)
+        .attr("x", -(height/2))
+        .text("Net Energy Consumption (PJ)");
+
     // color palette = one color per subgroup
     const color = d3.scaleOrdinal()
     .domain(subgroups)
