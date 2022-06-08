@@ -10,15 +10,15 @@ function base(){
 	var pie = d3.pie();
 			
 	//Easy colors accessible via a 10-step ordinal scale
-	var color = d3.scaleOrdinal(d3.schemeCategory10);
+	var color = d3.scaleOrdinal(['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f']);
 
 	//Create SVG element
-	var svg = d3.select("#chart")
+	var svg = d3.select("#pie")
 			    .append("svg")
 				.attr("width", w)
 				.attr("height", h);
 
-    var svg2 = d3.select("#chart")
+    var svg2 = d3.select("#pie")
                 .append("svg")
                 .attr("width", 200)
                 .attr("height", 270)
@@ -36,6 +36,17 @@ function base(){
             dataInt[i] = data[i].Total_Emission;
         }
 
+        var Tooltip = d3.select("#pie")
+                        .append("div")
+                        .style("opacity", 0)
+                        .attr("class", "tooltip")
+                        .style("background-color", "white")
+                        .style("border", "solid")
+                        .style("border-width", "2px")
+                        .style("border-radius", "5px")
+                        .style("padding", "5px")
+                        .style("position", "absolute");
+
         //Set up groups
         var arcs = svg.selectAll("g.arc")
                     .data(pie(dataInt))
@@ -43,25 +54,24 @@ function base(){
                     .append("g")
                     .attr("class", "arc")
                     .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")")
-                    .on('mouseover', function (d, i) {
+                    .on('mouseover', function () { //hover feature
                         d3.select(this).transition()
                             .duration('50')
-                            .attr('opacity', '.85');
-                        div.transition()
-                            .duration(50)
-                            .style("opacity", 1);
-                        let num = (Math.round((d.value / d.data.all) * 100)).toString() + '%';
-                        div.html(num)
-                            .style("left", (d3.event.pageX + 10) + "px")
-                            .style("top", (d3.event.pageY - 15) + "px");
+                            .attr('opacity', '.85')
+                            .style("cursor", "pointer")
+                            Tooltip.style("opacity", 1);
                     })
-                    .on('mouseout', function (d, i) {
+                    .on("mousemove",  function(event, d) {
+                    Tooltip.html("Total emissions (t CO2-e) of " + keys[d.index] + ": " + d.value)
+                            .style("left", (d3.pointer(event)[0]+250) + "px")
+                            .style("top", (d3.pointer(event)[1]+500) + "px")
+                            console.log("Total emissions (t CO2-e) of " + keys[d.index] + ": " + d.value);
+                        })
+                    .on('mouseout', function () {
                         d3.select(this).transition()
                             .duration('50')
-                            .attr('opacity', '1');
-                        div.transition()
-                            .duration('50')
-                            .style("opacity", 0);
+                            .attr('opacity', '1')
+                            Tooltip.style("opacity", 0);
                     });
 
         //Draw arc paths
@@ -70,24 +80,13 @@ function base(){
             return color(i);
         })
         .attr("d", arc);
-
-        //Labels
-        // arcs.append("text")
-        //     .attr("transform", function(dataTitle) {
-        //         return "translate(" + arc.centroid(dataTitle) + ")";
-        //     })
-        //     .attr("text-anchor", "middle")
-        //     .text(function(dataTitle) {
-        //         console.log(dataTitle[i]);
-        //         return dataTitle.value;
-        // });
     
     //creating keys for the legend and settign colour to each one
-    var keys = ["VIC", "NSW", "QLD", "TAS", "SA", "WA", "NT", "ACT"];
+    var keys = ["QLD", "NSW", "VIC", "WA", "SA", "NT", "TAS"];
 
     var colors = d3.scaleOrdinal()
         .domain(keys)
-        .range(d3.schemeCategory10);
+        .range(['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f']);
 
     //Placing dots on the legend
     svg2.selectAll("mydots")

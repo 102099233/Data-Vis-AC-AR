@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="Data Vis" />
+  <meta name="keywords"    content="Data Vis" />
+  <meta name="author"      content="Aaron Cinel, Ajay Rajkumar" />
+  <title>Data Vis</title>
+
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script src="Q3_segBarChart.js"></script>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+	<header>
+	<h1>Understanding the breakdown of industries and the amount of energy consumed</h1>
+	</header>
+
+	<nav><!--navigation bar-->
+        <a href="Q1.html">
+            Question 1</a>
+        <a href="Q2.html">
+            Question 2</a>
+        <a href="Q3.html">
+            Question 3</a>
+    </nav>
+
+	<article class="flex-container">
+	
+		<section class="flex-item">
+			<section id="body" class="flex-item">
+				<div id="visualisation">
+					<script>
+						console.log(d3.selectAll("p"))
+					</script>
+					
+					<h2>Total energy consumed in each state by industry</h2>
+					<p id ="stacked"></p>
+					<p>Firgure 1.</p>
+					<p>As shown in Figure 1. NSW, Vic, Qld, and WA are the largest energy consuming states in Australia.<br>
+					Figure 1. also shows that NSW and VIC consume the largest amount of energy in the residential industry, this could be<br>
+					due to NSW and VIC having the largest populations in Australia. Furthermore, WA and QLD consume the most energy in<br>
+					the mining industry which would be due to WA and QLD being the most resource rich states in Australia.</p>
+				</div>
+			</section>
+		</section>
+	
+	<footer>
+		Aaron Cinel 103618231 <br>
+		Ajay Rajkumar 102099233
+	</footer>
+	
+	</article>
+</body>
+</html>

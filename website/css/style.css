@@ -1,0 +1,97 @@
+body { /* sets background properties of all pages */
+	background-color: hsl(36, 95%, 85%);
+	background-image: url(../image.jpg);
+	background-position: top;
+	background-size: 1250px;
+	background-repeat: no-repeat;
+	margin-top: auto;
+	margin-bottom:auto;
+}
+
+.flex-container { /* sets flex container properties */
+	display: flex;
+	flex-direction: column;
+}
+
+.flex-item > div { /* sets properties for div elements inside flex-item */
+	background-color: rgba(255, 255, 255, 0.456);
+	color: black;
+	width: 100%;
+	margin: 10px;
+	text-align: center;
+	height: 150px;
+	font-size: 30px;
+}
+
+.flex-item { /* sets properties for flex-item */
+	display: flex;
+	margin: 10px;
+}
+
+footer { /* sets properties for the footer on all pages */
+    position: relative;
+    color: white;
+	padding-left: 10px;
+	padding-bottom: 100px;
+	background-color: rgb(40, 33, 28);
+	font-family: 'Open Sans',Helvetica,Arial,Lucida,sans-serif;
+}
+
+footer::before, footer::after { /* expands the footer to the full width of the page */
+    content:"";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    background-color: inherit;
+}
+
+footer::before { /* expands the footer to the full width of the page */
+    right: 100%;
+}
+
+footer::after { /* expands the footer to the full width of the page */
+    left: 100%;
+}
+
+header { /* sets properties for header */
+	text-shadow: 2px 2px 5px grey;
+	text-align: center;
+	height: 225px;
+	color: black;
+}
+
+nav { /* sets properties for nav element */
+	text-align: center;
+	background-color: rgba(255, 255, 255, 0.456);
+	padding: 10px;
+}
+
+nav > a { /* sets properties for a elements inside the nav element */
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	color: black;
+	font-weight: bold;
+	background-color: hsl(36, 100%, 90%, 0.9);
+}
+
+h1, h2 { /* sets properties for heading elements */
+	font-family: 'Open Sans',Helvetica,Arial,Lucida,sans-serif;
+}
+
+h1 { /* changes size of h1 elements */
+	font-size: 200%;
+}
+
+#body { /* sets position of order section */
+	padding-left: 20px;
+}
+
+#visualisation { /* sets properties for order text */
+	font-size: 15px;
+	padding: 20px;
+	border-style: ridge;
+	height:auto;
+}

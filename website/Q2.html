@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="Data Vis" />
+  <meta name="keywords"    content="Data Vis" />
+  <meta name="author"      content="Aaron Cinel, Ajay Rajkumar" />
+  <title>Data Vis</title>
+
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script src="Q2_pieChart.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+	<header>
+	<h1>Understanding the level of CO2 emissions relative to the type of energy produced</h1>
+	</header>
+
+	<nav><!--navigation bar-->
+        <a href="Q1.html">
+            Question 1</a>
+        <a href="Q2.html">
+            Question 2</a>
+        <a href="Q3.html">
+            Question 3</a>
+    </nav>
+
+	<article class="flex-container">
+	
+		<section class="flex-item">
+			<section id="body" class="flex-item">
+				<div id="visualisation">
+					<script>
+						console.log(d3.selectAll("p"))
+					</script>
+					
+					<h2>Total emisions by state</h2>
+					<p id ="pie"></p>
+					<p>Figure 1.</p>
+					<p>As shown in Figure 1. the large majority of emissions (t CO2-e) within Australia occurred in QLD with 52,727,914, NSW with 50074503, and VIC with 41,443,811.<br>
+					One reason for this could be due to these states having a larger population, resulting in increased emissions from a larger amount of construction,<br>
+					residential purposes, etc.</p>
+				</div>
+			</section>
+		</section>
+	
+	<footer>
+		Aaron Cinel 103618231 <br>
+		Ajay Rajkumar 102099233
+	</footer>
+	
+	</article>
+</body>
+</html>
