@@ -45,6 +45,7 @@ function base(){
                         .style("border-width", "2px")
                         .style("border-radius", "5px")
                         .style("padding", "5px")
+                        .style("position", "absolute");
 
         //Set up groups
         var arcs = svg.selectAll("g.arc")
@@ -53,23 +54,24 @@ function base(){
                     .append("g")
                     .attr("class", "arc")
                     .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")")
-                    .on('mouseover', function (d, i) { //hover feature
+                    .on('mouseover', function () { //hover feature
                         d3.select(this).transition()
                             .duration('50')
                             .attr('opacity', '.85')
                             .style("cursor", "pointer")
+                            Tooltip.style("opacity", 1);
                     })
                     .on("mousemove",  function(event, d) {
                     Tooltip.html("Total emissions (t CO2-e) of " + keys[d.index] + ": " + d.value)
                             .style("left", (d3.pointer(event)[0]+70) + "px")
-                            .style("top", (d3.pointer(event)[1]) + "px")
-                            console.log("Total emissions (t CO2-e) of " + keys[d.index] + ": " + d.value)
-                            console.log(d)
+                            .style("top", (d3.pointer(event)[1]+190) + "px")
+                            console.log("Total emissions (t CO2-e) of " + keys[d.index] + ": " + d.value);
                         })
-                    .on('mouseout', function (d, i) {
+                    .on('mouseout', function () {
                         d3.select(this).transition()
                             .duration('50')
-                            .attr('opacity', '1');
+                            .attr('opacity', '1')
+                            Tooltip.style("opacity", 0);
                     });
 
         //Draw arc paths
@@ -85,7 +87,6 @@ function base(){
     var colors = d3.scaleOrdinal()
         .domain(keys)
         .range(['#b2df8a','#1f78b4','#a6cee3','#e31a1c','#fb9a99','#fdbf6f','#33a02c','#ff7f00','#cab2d6']);
-        // ['#b2df8a','#1f78b4','#a6cee3','#fdbf6f','#fb9a99','#e31a1c','#ff7f00','#33a02c','#cab2d6']
 
     //Placing dots on the legend
     svg2.selectAll("mydots")
@@ -95,7 +96,7 @@ function base(){
         .attr("cx", 10)
         .attr("cy", function(d,i){ return 25 + i*25})
         .attr("r", 7)
-        .style("fill", function(d){ return colors(d)})
+        .style("fill", function(d){ return colors(d)});
 
     //Placing key values on the legend
     svg2.selectAll("mylabels")
