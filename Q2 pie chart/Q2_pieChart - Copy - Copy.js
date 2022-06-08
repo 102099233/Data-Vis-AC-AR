@@ -37,16 +37,16 @@ function base(){
         }
 
         //creating tooltip variable
-        var Tooltip = d3.select("#chart")
-                .append("div")
-                .attr("class", "tooltip")
-                .style("opacity", 0)
-                .style("background-color", "white")
-                .style("border", "solid")
-                .style("border-width", "2px")
-                .style("border-radius", "5px")
-                .style("padding", "5px")
-                .style("position", "absolute");
+        // var Tooltip = d3.select("#chart")
+        //         .append("div")
+        //         .attr("class", "tooltip")
+        //         .style("opacity", 0)
+        //         .style("background-color", "white")
+        //         .style("border", "solid")
+        //         .style("border-width", "2px")
+        //         .style("border-radius", "5px")
+        //         .style("padding", "5px")
+        //         .style("position", "absolute");
 
         //Set up groups
         var arcs = svg.selectAll("g.arc")
@@ -55,7 +55,7 @@ function base(){
                     .append("g")
                     .attr("class", "arc")
                     .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")")
-                    .on('mouseover', function (d, i) {
+                    .on('mouseover', function (d, i) { //hover feature
                         d3.select(this).transition()
                             .duration('50')
                             .attr('opacity', '.85')
@@ -72,18 +72,15 @@ function base(){
                         //     .style("left", (d3.event.pageX + 10) + "px")
                         //     .style("top", (d3.event.pageY - 15) + "px");
                     })
-                    .on("mousemove", function(event, d) {
-                        Tooltip.html("Total emissions: " + d.value)
-                               .style("left", (d3.pointer(event)[0]) + "px")
-                               .style("top", (d3.pointer(event)[1]) + "px");
-                    })
+                    // .on("mousemove", function(event, d) {
+                    //     Tooltip.html("Total emissions: " + d.value)
+                    //            .style("left", (d3.pointer(event)[0]) + "px")
+                    //            .style("top", (d3.pointer(event)[1]) + "px");
+                    // })
                     .on('mouseout', function (d, i) {
                         d3.select(this).transition()
                             .duration('50')
                             .attr('opacity', '1');
-                        // div.transition()
-                        //     .duration('50')
-                        //     .style("opacity", 0);
                     });
 
         //Draw arc paths
@@ -92,17 +89,6 @@ function base(){
             return color(i);
         })
         .attr("d", arc);
-
-        //Labels
-        // arcs.append("text")
-        //     .attr("transform", function(dataTitle) {
-        //         return "translate(" + arc.centroid(dataTitle) + ")";
-        //     })
-        //     .attr("text-anchor", "middle")
-        //     .text(function(dataTitle) {
-        //         console.log(dataTitle[i]);
-        //         return dataTitle.value;
-        // });
     
     //creating keys for the legend and settign colour to each one
     var keys = ["VIC", "NSW", "QLD", "TAS", "SA", "WA", "NT", "ACT"];
