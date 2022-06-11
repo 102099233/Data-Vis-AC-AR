@@ -9,6 +9,7 @@
 
   <script src="https://d3js.org/d3.v6.min.js"></script>
   <script src="Q3_segBarChart.js"></script>
+  <script async src="Q3 Line.js"></script>
 
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -28,30 +29,39 @@
     </nav>
 
 	<article class="flex-container">
-	
+
 		<section class="flex-item">
 			<section id="body" class="flex-item">
 				<div id="visualisation">
 					<script>
 						console.log(d3.selectAll("p"))
 					</script>
-					
+
+          <h2>Energy Usage by Industry</h2>
+          <p id = "line"></p>
+          <p>Figure 1.</p>
+          <p>To interact with this chart, hover over the line to see what industry that line is portraying. This graph is showing<br>
+            the trends in energy consumption from 1990 to 2020 by different industries in Australia. The y-axis is in petajoules. <br>
+            Certain industries are consistent in their energy usage such as residential which has not changed much over the years. <br>
+            However, mining and transport have had large increases especially in the last decade. </p>
+          <br>
+          <br>
 					<h2>Total energy consumed in each state by industry</h2>
 					<p id ="stacked"></p>
-					<p>Firgure 1.</p>
-					<p>As shown in Figure 1. NSW, Vic, Qld, and WA are the largest energy consuming states in Australia.<br>
-					Figure 1. also shows that NSW and VIC consume the largest amount of energy in the residential industry, this could be<br>
+					<p>Figure 2.</p>
+					<p>As shown in Figure 2. NSW, Vic, Qld, and WA are the largest energy consuming states in Australia.<br>
+					Figure 2. also shows that NSW and VIC consume the largest amount of energy in the residential industry, this could be<br>
 					due to NSW and VIC having the largest populations in Australia. Furthermore, WA and QLD consume the most energy in<br>
 					the mining industry which would be due to WA and QLD being the most resource rich states in Australia.</p>
 				</div>
 			</section>
 		</section>
-	
+
 	<footer>
 		Aaron Cinel 103618231 <br>
 		Ajay Rajkumar 102099233
 	</footer>
-	
+
 	</article>
 </body>
 </html>

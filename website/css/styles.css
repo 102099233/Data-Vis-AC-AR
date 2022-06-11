@@ -113,13 +113,15 @@ div.tooltip-map {
      pointer-events: none;
      font-size: 1.3rem;
 }
-#NonRenewable {background-color: #009933;
+#NonRenewable {background-color: #f44336;
 				border: none;
 			 	color: white;
 				font-size: 20px;
-			 	text-align: center;}
-#Renewable {background-color: #008CBA;
+			 	text-align: center;
+				cursor: pointer;}
+#Renewable {background-color: #009933;
 				border: none;
 				color: white;
 				font-size: 20px;
-				text-align: center;}
+				text-align: center;
+				cursor: pointer;}

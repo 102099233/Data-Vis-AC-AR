@@ -6,8 +6,10 @@
   <meta name="keywords"    content="Data Vis" />
   <meta name="author"      content="Aaron Cinel, Ajay Rajkumar" />
   <title>Data Vis</title>
-  <script src="js/scriptReg.js"></script>
-  <link rel="stylesheet" href="css/style.css">
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script async src="AusMapScript.js"></script>
+  <script async src="Q1_Line.js"></script>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 	<header>
@@ -24,24 +26,43 @@
     </nav>
 
 	<article class="flex-container">
-	
+
 		<section class="flex-item">
 			<section id="body" class="flex-item">
 				<div id="visualisation">
 					<script>
 						console.log(d3.selectAll("p"))
 					</script>
-					
-					<p id =""></p>
+          <h2>Total Energy Produced By State</h2>
+          <p id = "map"></p>
+          <p>Figure 1.</p>
+          <p>The Figure 1 visualisation shows a map of Australia split into its different states. To interact with it, hover the mouse over the state you would</br>
+            like information to display to view the data. The data shown in the pop up box is the total energy produced through the two different fuel types.</br>
+            This data is most recently from 2019. One being renewable fuels and the second being nonrenewable fuels. The biggest producer of energy</br>
+            as a whole is NSW followed by Victoria. An interesting state to consider in the drive for sustainable energy production is Tasmania.</br>
+            They are the 3rd largest producer of renewable energy and the smallest producer of non-renewable energy.  Data was not available for ACT. </p>
+          <br>
+          <br>
+          <h2>Total energy consumed in each state by industry</h2>
+          <p id ="MultiChart"></p>
+          <button type="button" id = "NonRenewable" onclick="nonRenew()">Non Renewable Graph</button>
+        	<button type="button" id = "Renewable" onclick="Renew()">Renewable Graph</button>
+          <p>Figure 2.</p>
+          <p>To interact with figure 2, click one of the two buttons to toggle between the graph you would like to view. These two graphs breakdown the</br>
+            electricity generation between the fuels. As you toggle between the graphs be wary of scaling along the y-axis. These graphs are highlighting the</br>
+            trends from 1990 to 2020 of different fuel usage to produce electricity in Australia. As seen in the renewable graph, since 2005 a sharp increase</br>
+            has occurred in electricity generation through most renewable fuels. Non-renewable fuels on the other hand have had movement over the given period</br>
+            but aren't as sharp in their movement. Interestingly between 2005 and 2010, black coal usage went down by about 20,000 GWh at the same time natural</br>
+            gas went up by the same amount. This could indicate that black coal was substituted by natural gas. </p>
 				</div>
 			</section>
 		</section>
-	
+
 	<footer>
 		Aaron Cinel 103618231 <br>
 		Ajay Rajkumar 102099233
 	</footer>
-	
+
 	</article>
 </body>
 </html>
