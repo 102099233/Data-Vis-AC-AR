@@ -89,9 +89,16 @@ h1 { /* changes size of h1 elements */
 	padding-left: 20px;
 }
 
+#note {
+	color: red;
+}
+
 #visualisation { /* sets properties for order text */
 	font-size: 15px;
-	padding: 20px;
+	padding-top: 20px;
+	padding-left: 60px;
+	padding-right: 60px;
+	padding-bottom: 60px;
 	border-style: ridge;
 	height:auto;
 }
