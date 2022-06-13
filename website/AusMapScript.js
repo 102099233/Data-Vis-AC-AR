@@ -10,7 +10,7 @@ var path = d3.geoPath()
               .projection(projection);
 //scaling the colours
 var color = d3.scaleOrdinal()
-              .range(['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462','#b3de69','#fccde5','#d9d9d9']);
+              .range(["#ea5545", "#f46a9b", "#ef9b20", "#bdcf32", "#87bc45", "#dc0ab4", "#27aeef", "#ede15b"]);
 
 var svg = d3.select("#map")
             .append("svg")
